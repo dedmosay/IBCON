@@ -1,29 +1,22 @@
-import "./styles.css";
-import { Canvas } from "@react-three/fiber";
-import { useLoader } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { Suspense } from "react";
+import React from 'react'
+import { Canvas } from '@react-three/fiber'
+import Model from './Model/Model'
+import "./styles.css";
 
-const  Model = ({ url }) => {
-  const fbx = useLoader(FBXLoader,url);
-
-  return (
-    <>
-      <primitive object={fbx} scale={0.02} />
-    </>
-  );
-};
 
 export default function ThreeScene() {
   return (
     <div className="ThreeScene">
-       <Canvas >
-        <pointLight position={[10, 10, 10]} />
+      <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 3, 7], fov: 50 }}>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[-10, 0, 0]} color="yellow" intensity={20} />
+        <pointLight position={[0, 10, 10]} color="blue" intensity={1.5} />
         <Suspense fallback={null}>
-            <mesh position={[0.5, 0, -0.5]}>
-          <Model  url="/QuickCube.fbx"/>
-          </mesh>
+          <Model url="/ТестоваяМодель.fbx" position={[0, 0, 0]} />
+          <Model url="/roof_expierence.fbx" position={[0, 0, 0]} />
+          <directionalLight color="red" position={[0, 0, 5]} />
           <OrbitControls />
           <Environment preset="park" background />
         </Suspense>
